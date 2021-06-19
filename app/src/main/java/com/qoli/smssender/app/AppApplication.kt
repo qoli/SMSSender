@@ -11,10 +11,9 @@ class AppApplication: Application(){
 
     override fun onCreate() {
         super.onCreate()
-        // Required initialization logic here!
+        // ToastUtils.init
         ToastUtils.init(this);
         ToastUtils.setGravity(Gravity.BOTTOM,0,80)
-
 
         // Initialize the Prefs class
         Prefs.Builder()

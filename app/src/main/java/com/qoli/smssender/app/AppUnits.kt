@@ -1,21 +1,21 @@
 package com.qoli.smssender.app
 
 object AppUnits {
-     fun simStatetoText(value: Int?): String {
-        when (value) {
-            1 -> return "Absent"
-            2 -> return "PinRequired"
-            3 -> return "PukRequired"
-            4 -> return "NetworkLocked"
-            5 -> return "Ready"
-            6 -> return "NotReady"
-            7 -> return "PermDisabled"
-            8 -> return "CardIoError"
-            9 -> return "CardRestricted"
+     fun simStatedText(value: Int?): String {
+         return when (value) {
+             1 -> "Absent"
+             2 -> "PinRequired"
+             3 -> "PukRequired"
+             4 -> "NetworkLocked"
+             5 -> "Ready"
+             6 -> "NotReady"
+             7 -> "PermDisabled"
+             8 -> "CardIoError"
+             9 -> "CardRestricted"
 
-            else -> {
-                return "unknown"
-            }
-        }
+             else -> {
+                 "unknown"
+             }
+         }
     }
 }

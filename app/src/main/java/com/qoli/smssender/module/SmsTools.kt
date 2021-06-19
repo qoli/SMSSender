@@ -52,7 +52,7 @@ class SmsTools(private val ctx: Context) {
     fun getSIMCardState(): String {
         val tm = ctx.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         val state = tm.simState
-        return AppUnits.simStatetoText(state)
+        return AppUnits.simStatedText(state)
     }
 
     fun sendLoops(loopTimes: Int = 5, interval: Long = 5000): Unit {
