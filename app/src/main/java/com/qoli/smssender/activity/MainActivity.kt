@@ -1,29 +1,34 @@
 package com.qoli.smssender.activity
 
 
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
-import android.provider.Telephony
-import android.telephony.TelephonyManager
 import android.util.Log
-import android.view.View
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.afollestad.materialdialogs.LayoutMode
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.bottomsheets.BottomSheet
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.customview.getCustomView
+import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
-import com.klinker.android.send_message.*
-import com.pixplicity.easyprefs.library.Prefs
-import com.qoli.smssender.app.AppConstant
-import com.qoli.smssender.app.AppUnits
+import com.qoli.smssender.R
+import com.qoli.smssender.activity.newJobs.NewJobBaseMode
+import com.qoli.smssender.activity.newJobs.NewJobCSVmode
+import com.qoli.smssender.activity.newJobs.NewJobNotionMode
 import com.qoli.smssender.databinding.ActivityMainBinding
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import java.util.*
+import com.qoli.smssender.entity.JobsHelper
+import com.qoli.smssender.module.SmsTools
 
 
 class MainActivity : AppCompatActivity() {
 
-
+    private lateinit var smsTools: SmsTools
     private lateinit var binding: ActivityMainBinding
     private var intentSimStateChanged: IntentFilter? = null
 
@@ -31,19 +36,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         XXPermissions.setScopedStorage(true)
 
+        // init
         binding = ActivityMainBinding.inflate(layoutInflater)
-
+        smsTools = SmsTools(this)
 
         // Receiver
         intentSimStateChanged = IntentFilter("android.intent.action.SIM_STATE_CHANGED")
         registerReceiver(simStateReceiver, intentSimStateChanged)
 
-
         // view
         setContentView(binding.root)
+        mainViewActions()
 
-        // init app
-//        checkPermissions()
+        JobsHelper(this.applicationContext).listAll()
     }
 
     override fun onDestroy() {
@@ -51,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         unregisterReceiver(simStateReceiver)
     }
 
+    // BroadcastReceiver
     private val simStateReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             if (intent.action.equals("android.intent.action.SIM_STATE_CHANGED")) {
@@ -59,74 +65,83 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Views
+    private fun mainViewActions() {
+
+        checkPermissions()
+
+        binding.AppBarLayout.topAppBar.title = getString(R.string.app_name)
+        binding.AppBarLayout.topAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.setting -> {
+                    startActivity(Intent(this, SettingsActivity::class.java))
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
+        }
+
+        binding.NewJob.setOnClickListener {
+            newJobDialog()
+        }
 
 
-//    private fun initApns() {
-//        ApnUtils.initDefaultApns(
-//            this
-//        ) {
-//            settings = com.qoli.smssender.Settings.get(this, true)
-//        }
-//    }
-//
-//
-//    private fun setupUI() {
-//        if (Utils.isDefaultSmsApp(this)) {
-//            binding.setAsDefault.visibility = View.GONE
-//        }
-//
-//        binding.setAsDefault.setOnClickListener { setDefaultSmsApp() }
-//        binding.apns.setOnClickListener { initApns() }
-//
-//        binding.messageEdit.setText("Message: ${Date()}")
-//        binding.from.setText(Utils.getMyPhoneNumber(this))
-//        binding.to.setText(Utils.getMyPhoneNumber(this))
-//        binding.send.setOnClickListener { sendLoops() }
-//        binding.loopTimes.setText(Prefs.getString(AppConstant.loopTimes, "5"))
-//        binding.interval.setText(Prefs.getString(AppConstant.interval, "5000"))
-//
-//    }
-//
-//    private fun setDefaultSmsApp() {
-//        binding.setAsDefault.visibility = View.GONE
-//        val intent = Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT)
-//        intent.putExtra(
-//            Telephony.Sms.Intents.EXTRA_PACKAGE_NAME,
-//            packageName
-//        )
-//        startActivity(intent)
-//    }
-
-
-//    private fun checkPermissions() {
-//        XXPermissions.with(this)
-//            .permission(Permission.SEND_SMS)
-//            .permission(Permission.READ_SMS)
-//            .permission(Permission.RECEIVE_SMS)
-//            .permission(Permission.READ_PHONE_STATE)
-//            .permission(Permission.WRITE_EXTERNAL_STORAGE)
-//            .permission(Permission.WRITE_SETTINGS)
-//            .request { permissions, all ->
-//                Log.d("Logs", permissions.toString())
-//
-//                if (all) {
-//                    reloadUI()
-//                } else {
-//                    binding.helperText.text = "Permissions not enough"
-//                }
-//            }
-//    }
-//
-    private fun reloadUI() {
-        getSIMState()
     }
 
-    private fun getSIMState() {
-        val tm = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-        val state = tm.simState
-        binding.helperText.text = AppUnits.simStatetoText(state)
+    private fun newJobDialog() {
+
+        val dialog = MaterialDialog(this, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
+            cornerRadius(16f)
+            customView(R.layout.new_jobs_bottom_sheet, scrollable = true, dialogWrapContent = true)
+            lifecycleOwner(this@MainActivity)
+        }
+
+        val customView = dialog.getCustomView()
+
+        customView.findViewById<Button>(R.id.buttonBaseMode).setOnClickListener {
+            startActivity(Intent(this, NewJobBaseMode::class.java))
+        }
+
+        customView.findViewById<Button>(R.id.buttonCSVMode).setOnClickListener {
+            startActivity(Intent(this, NewJobCSVmode::class.java))
+        }
+
+        customView.findViewById<Button>(R.id.buttonNotionMode).setOnClickListener {
+            startActivity(Intent(this, NewJobNotionMode::class.java))
+        }
+    }
+
+
+    private fun checkPermissions() {
+        XXPermissions.with(this)
+            .permission(Permission.SEND_SMS)
+            .permission(Permission.READ_SMS)
+            .permission(Permission.RECEIVE_SMS)
+            .permission(Permission.READ_PHONE_STATE)
+            .permission(Permission.WRITE_EXTERNAL_STORAGE)
+            .permission(Permission.WRITE_SETTINGS)
+            .request { permissions, all ->
+                Log.d("Logs", permissions.toString())
+
+                if (all) {
+                    reloadUI()
+                    binding.PermissionsText.text = "All is OK"
+                } else {
+                    binding.PermissionsText.text = "Permissions not enough"
+                }
+            }
+    }
+
+    //
+    private fun reloadUI() {
+        binding.DefaultApp.text = smsTools.getDefaultApp()
+        binding.SIMCardText.text = smsTools.getSIMCardState()
+        binding.PhoneNumber.text = smsTools.getPhoneNumber()
     }
 
 
 }
+
 

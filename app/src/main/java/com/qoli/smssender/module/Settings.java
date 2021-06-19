@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.qoli.smssender;
+package com.qoli.smssender.module;
 
 import android.content.Context;
 import android.content.SharedPreferences;

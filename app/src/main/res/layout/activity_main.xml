@@ -6,33 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="128dp"
-        android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:expandedTitleMarginBottom="28dp"
-            app:expandedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Expanded"
-            app:collapsedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Collapsed">
-
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
-            style="@style/Custom.ActionBar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:menu="@menu/top_app_bar"
-            app:title="@string/app_name" />
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
+    <include
+        android:id="@+id/AppBarLayout"
+        layout="@layout/app_bar_layout" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -40,142 +16,138 @@
         android:layout_marginTop="128dp"
         android:scrollbars="none"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
+        <!-- Main -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-
-                >
-
-                <Button
-                    android:id="@+id/set_as_default"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="1"
-                    android:insetLeft="12dp"
-                    android:insetRight="12dp"
-                    android:text="Set Default App" />
-
-                <Button
-                    android:id="@+id/apns"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="1"
-                    android:insetLeft="12dp"
-                    android:insetRight="12dp"
-                    android:text="Select APNs" />
-
-            </LinearLayout>
-
-            <View
-                android:id="@+id/divider2"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="16dp"
-                android:background="?android:attr/listDivider" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/loopTimes"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Loop Times"
-                    android:inputType="number"
-                    android:selectAllOnFocus="false"
-                    android:singleLine="false" />
-
-                <EditText
-                    android:id="@+id/interval"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="interval(ms)"
-                    android:inputType="number"
-                    android:singleLine="true" />
-
-            </LinearLayout>
-
-            <View
-                android:id="@+id/divider3"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="16dp"
-                android:background="?android:attr/listDivider" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/from"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:enabled="false"
-                    android:hint="From:"
-                    android:inputType="phone"
-                    android:singleLine="true" />
-
-                <EditText
-                    android:id="@+id/to"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="To:"
-                    android:inputType="phone"
-                    android:singleLine="true" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/messageEdit"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Message Body"
-                    android:lines="5" />
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/send"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Send" />
 
             <TextView
-                android:id="@+id/helperText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="16dp"
-                android:text="Sim" />
+                android:fontFamily="@font/roboto"
+                android:paddingBottom="4dp"
+                android:text="Permissions"
+                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Caption" />
 
+            <TextView
+                android:id="@+id/PermissionsText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PermissionsText"
+                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:paddingTop="16dp"
+                android:paddingBottom="4dp"
+                android:text="Default SMS App" />
+
+            <TextView
+                android:id="@+id/DefaultApp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DefaultApp"
+                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="4dp"
+                        android:text="SIM Card" />
+
+                    <TextView
+                        android:id="@+id/SIMCardText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="SIMCardText"
+                        android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto"
+                        android:paddingTop="16dp"
+                        android:paddingBottom="4dp"
+                        android:text="Phone Number" />
+
+                    <TextView
+                        android:id="@+id/PhoneNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="PhoneNumber"
+                        android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp"
+                android:text="Jobs" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/AllJobsView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/NewJob"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New job"
+                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body2" />
 
         </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
 
+
+    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--        android:id="@+id/fab"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginEnd="16dp"-->
+    <!--        android:layout_marginBottom="16dp"-->
+    <!--        android:contentDescription="fab_content_desc"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:srcCompat="@drawable/ic_baseline_add_24" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
