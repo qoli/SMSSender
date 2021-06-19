@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.qoli.smssender;
+package com.qoli.smssender.receiver;
 
 import com.android.mms.transaction.PushReceiver;
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.qoli.smssender;
+package com.qoli.smssender.receiver;
 
 import android.app.Notification;
 import android.content.BroadcastReceiver;
@@ -26,6 +26,7 @@ import android.widget.Toast;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.hjq.toast.ToastUtils;
+import com.qoli.smssender.R;
 
 /**
  * Needed to make default sms app for testing

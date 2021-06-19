@@ -1,6 +1,6 @@
-package com.qoli.smssender
+package com.qoli.smssender.app
 
-object appUnits {
+object AppUnits {
      fun simStatetoText(value: Int?): String {
         when (value) {
             1 -> return "Absent"

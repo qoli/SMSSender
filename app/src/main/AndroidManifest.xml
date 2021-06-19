@@ -37,11 +37,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SMSSender"
-        android:name=".appApplication"
+        android:name=".app.AppApplication"
         >
 
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
@@ -67,7 +67,7 @@
         <service android:name="com.android.mms.transaction.TransactionService" />
 
         <receiver
-            android:name="SmsReceiver"
+            android:name=".receiver.SmsReceiver"
             android:permission="android.permission.BROADCAST_SMS">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_DELIVER" />
@@ -75,7 +75,7 @@
         </receiver>
 
         <receiver
-            android:name="MmsReceiver"
+            android:name=".receiver.MmsReceiver"
             android:permission="android.permission.BROADCAST_WAP_PUSH">
             <intent-filter>
                 <action android:name="android.provider.Telephony.WAP_PUSH_DELIVER" />
@@ -88,11 +88,11 @@
             android:taskAffinity="com.klinker.android.messaging.MMS_SENT"/>
 
         <receiver
-            android:name="MmsReceivedReceiverImpl"
+            android:name=".receiver.MmsReceivedReceiverImpl"
             android:taskAffinity="com.klinker.android.messaging.MMS_RECEIVED"/>
 
         <service
-            android:name="HeadlessSmsSendService"
+            android:name=".receiver.HeadlessSmsSendService"
             android:exported="true"
             android:permission="android.permission.SEND_RESPOND_VIA_MESSAGE" >
             <intent-filter>
@@ -106,7 +106,7 @@
             </intent-filter>
         </service>
 
-        <activity android:name="PermissionActivity"/>
+        <activity android:name=".activity.PermissionActivity"/>
 
     </application>
 

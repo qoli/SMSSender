@@ -1,4 +1,4 @@
-package com.qoli.smssender;
+package com.qoli.smssender.receiver;
 
 import android.content.Context;
 import android.net.Uri;

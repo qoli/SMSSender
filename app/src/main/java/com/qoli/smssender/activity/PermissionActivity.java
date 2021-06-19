@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.qoli.smssender;
+package com.qoli.smssender.activity;
 
 import android.Manifest;
 import android.app.Activity;
@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
+import com.qoli.smssender.activity.MainActivity;
 
 
 public class PermissionActivity extends Activity {
