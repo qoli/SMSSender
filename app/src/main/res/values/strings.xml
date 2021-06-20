@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">讯息助手</string>
+    <string name="app_name">Message Helper</string>
     <string name="app_setting">Setting</string>
-    <string name="send_mode_base">基本模式</string>
-    <string name="send_mode_csv">CSV 文件模式</string>
-    <string name="send_mode_notion">Notion 數據庫模式</string>
+    <string name="send_mode_base">Base Mode</string>
+    <string name="send_mode_csv">CSV File Mode</string>
+    <string name="send_mode_notion">Notion Database Mode</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
     <!-- Preference Titles -->
@@ -29,4 +29,21 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="csv_file_desc">CSV 文件需要符合模版文件的格式。以手机号码、短信文本的两个栏位构成。</string>
+    <string name="job_title">任務標題</string>
+    <string name="send_interval">發送間隔（秒）</string>
+    <string name="send_interval_hint">秒</string>
+    <string name="back_number">回測號碼</string>
+    <string name="back_number_hint">+86</string>
+    <string name="receiver_number">接收號碼（一行一個號碼）</string>
+    <string name="phone_number_hint">Phone Number</string>
+    <string name="message_content">信息內容</string>
+    <string name="message_content_hint">Text</string>
+    <string name="selectCSVFile_text">选择 CSV 文件</string>
+    <string name="openCSVTemplate_text">打开模版 CSV 文件</string>
+    <string name="notion_database_url">Notion Database URL</string>
+    <string name="notion_database_url_hint">URL</string>
+    <string name="new_send_mode">发送模式</string>
+    <string name="new_base_mode">基本发送模式</string>
+    <string name="job_title_hint" />
+    <string name="save_button">Save</string>
 </resources>

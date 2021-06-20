@@ -9,19 +9,22 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="任務標題" />
+            android:text="@string/job_title" />
 
         <EditText
             android:id="@+id/JobTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autofillHints=""
             android:ems="10"
-            android:hint="Title" />
+            android:hint="@string/job_title_hint"
+            android:inputType="text" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="16dp"
+            android:baselineAligned="false"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -34,14 +37,15 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="發送間隔" />
+                    android:text="@string/send_interval" />
 
                 <EditText
                     android:id="@+id/interval"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:autofillHints=""
                     android:ems="10"
-                    android:hint="秒"
+                    android:hint="@string/send_interval_hint"
                     android:inputType="number" />
             </LinearLayout>
 
@@ -56,14 +60,15 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="回測號碼" />
+                    android:text="@string/back_number" />
 
                 <EditText
                     android:id="@+id/backNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:autofillHints=""
                     android:ems="10"
-                    android:hint="+86"
+                    android:hint="@string/back_number_hint"
                     android:inputType="phone" />
 
             </LinearLayout>

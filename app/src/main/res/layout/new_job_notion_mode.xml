@@ -35,14 +35,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Notion Database URL" />
+                android:text="@string/notion_database_url" />
 
             <EditText
                 android:id="@+id/NotionURL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
                 android:ems="10"
-                android:hint="URL" />
+                android:hint="@string/notion_database_url_hint"
+                android:inputType="textUri" />
 
             <include
                 android:id="@+id/SaveButton"

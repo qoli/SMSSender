@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MainActivity">
+    tools:context=".activity.main.MainActivity">
 
     <include
         android:id="@+id/AppBarLayout"
@@ -14,8 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="128dp"
+        android:fillViewport="true"
         android:scrollbars="none"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -65,13 +67,14 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
@@ -92,8 +95,8 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
@@ -125,29 +128,18 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/AllJobsView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/NewJob"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:text="New job"
                 android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body2" />
 
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-
-    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-    <!--        android:id="@+id/fab"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginEnd="16dp"-->
-    <!--        android:layout_marginBottom="16dp"-->
-    <!--        android:contentDescription="fab_content_desc"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:srcCompat="@drawable/ic_baseline_add_24" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

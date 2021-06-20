@@ -1,4 +1,4 @@
-package com.qoli.smssender.activity
+package com.qoli.smssender.activity.main
 
 
 import android.content.BroadcastReceiver
@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
@@ -18,6 +19,7 @@ import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.qoli.smssender.R
+import com.qoli.smssender.activity.SettingsActivity
 import com.qoli.smssender.activity.newJobs.NewJobBaseMode
 import com.qoli.smssender.activity.newJobs.NewJobCSVmode
 import com.qoli.smssender.activity.newJobs.NewJobNotionMode
@@ -46,9 +48,13 @@ class MainActivity : AppCompatActivity() {
 
         // view
         setContentView(binding.root)
-        mainViewActions()
+        setupView()
+        setupAllJobsView()
+    }
 
-        JobsHelper(this.applicationContext).listAll()
+    override fun onResume() {
+        super.onResume()
+        fetchData()
     }
 
     override fun onDestroy() {
@@ -66,7 +72,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Views
-    private fun mainViewActions() {
+    private fun setupAllJobsView() {
+        JobsHelper(this.applicationContext).listAll { data ->
+            binding.AllJobsView.adapter = MainJobsRecyclerAdapter(data)
+            binding.AllJobsView.layoutManager = LinearLayoutManager(this)
+        }
+    }
+
+    private fun fetchData() {
+        JobsHelper(this.applicationContext).listAll { data ->
+            try {
+                runOnUiThread {
+                    (binding.AllJobsView.adapter as? MainJobsRecyclerAdapter)?.updateData(data)
+                    binding.AllJobsView.adapter?.notifyDataSetChanged()
+                }
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+
+    private fun setupView() {
 
         checkPermissions()
 

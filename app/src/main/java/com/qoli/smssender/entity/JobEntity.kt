@@ -19,3 +19,4 @@ data class JobEntity(
 ) {
     constructor(jobMode: Int, jobTitle: String) : this(0, jobMode, jobTitle)
 }
+

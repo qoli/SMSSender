@@ -1,7 +1,6 @@
 package com.qoli.smssender.entity
 
 import android.content.Context
-import android.util.Log
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -17,11 +16,10 @@ class JobsHelper(val context: Context) {
         }
     }
 
-    fun listAll() {
+    @DelicateCoroutinesApi
+    fun listAll(callback: (result: List<JobEntity>) -> Unit) {
         GlobalScope.launch {
-            val all = AppDatabase(context).dao()?.getAll()
-            Log.d("Logs", all.toString())
+            callback.invoke(AppDatabase(context).dao()?.getAll() ?: emptyList())
         }
-
     }
 }

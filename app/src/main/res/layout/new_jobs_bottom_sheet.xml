@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="发送模式"
+            android:text="@string/new_send_mode"
             android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Subtitle1"
             android:textStyle="bold" />
 
@@ -29,7 +29,7 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="基本发送模式"
+            android:text="@string/new_base_mode"
             android:textAlignment="viewStart" />
 
         <TextView
@@ -37,6 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:paddingStart="8dp"
+            android:paddingEnd="0dp"
             android:text="固定的短信文本，可粘贴多行的电话号码以发送讯息" />
 
         <Button
@@ -52,6 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:paddingStart="8dp"
+            android:paddingEnd="0dp"
             android:text="可导入 CSV 文件，以 CSV 文件的每行内容发送，可针对不同的号码发送不同的文本" />
 
         <Button
@@ -66,6 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="8dp"
+            android:paddingEnd="0dp"
             android:text="可连接 Notion 数据库，每次进入任务时候都可远程更新发送内容，发送模式和 CSV 模式相同" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,7 +22,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
-import com.qoli.smssender.activity.MainActivity;
+import com.qoli.smssender.activity.main.MainActivity;
 
 
 public class PermissionActivity extends Activity {
