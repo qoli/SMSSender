@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 
 @Entity
-data class JobsEntity(
+data class JobEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     @ColumnInfo val jobMode: Int,
     @ColumnInfo val jobTitle: String,

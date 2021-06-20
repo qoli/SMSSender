@@ -12,7 +12,7 @@ class JobsHelper(val context: Context) {
     fun newBaseJob(title: String) {
         GlobalScope.launch {
             AppDatabase(context).dao()?.insertAll(
-                JobsEntity(0, title)
+                JobEntity(0, title)
             )
         }
     }

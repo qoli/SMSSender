@@ -5,24 +5,18 @@ import androidx.room.*
 
 @Dao
 interface JobsDAO {
-    @Query("SELECT * FROM JobsEntity")
-    fun getAll(): List<JobsEntity>
+    @Query("SELECT * FROM JobEntity")
+    fun getAll(): List<JobEntity>
 
-    @Query("SELECT * FROM JobsEntity WHERE id IN (:ids)")
-    fun loadAllByIds(ids: IntArray): List<JobsEntity>
-
-//    @Query(
-//        "SELECT * FROM user WHERE first_name LIKE :first AND " +
-//                "last_name LIKE :last LIMIT 1"
-//    )
-//    fun findByName(first: String, last: String): JobsEntity
+    @Query("SELECT * FROM JobEntity WHERE id IN (:ids)")
+    fun loadAllByIds(ids: IntArray): List<JobEntity>
 
     @Insert
-    fun insertAll(vararg users: JobsEntity)
+    fun insertAll(vararg users: JobEntity)
 
     @Delete
-    fun delete(user: JobsEntity)
+    fun delete(user: JobEntity)
 
     @Update
-    fun updateTodo(vararg todos: JobsEntity)
+    fun updateTodo(vararg todos: JobEntity)
 }

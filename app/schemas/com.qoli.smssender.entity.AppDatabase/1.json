@@ -2,10 +2,10 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "9b7f70e1f006ff56a9891a5bc05ff65d",
+    "identityHash": "c945774562d82ac5902a2c637b6531e2",
     "entities": [
       {
-        "tableName": "JobsEntity",
+        "tableName": "JobEntity",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `jobMode` INTEGER NOT NULL, `jobTitle` TEXT NOT NULL, `jobInterval` INTEGER NOT NULL, `jobBackNumber` TEXT, `basePhoneNumbers` TEXT, `baseMessage` TEXT, `csvFileByte` INTEGER, `notionURL` TEXT)",
         "fields": [
           {
@@ -76,7 +76,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9b7f70e1f006ff56a9891a5bc05ff65d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c945774562d82ac5902a2c637b6531e2')"
     ]
   }
 }

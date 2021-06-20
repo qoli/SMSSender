@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 
-@Database(entities = [JobsEntity::class], version = 1)
+@Database(entities = [JobEntity::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun dao(): JobsDAO?
 
@@ -14,6 +14,7 @@ abstract class AppDatabase : RoomDatabase() {
         @Volatile
         private var instance: AppDatabase? = null
         private val LOCK = Any()
+        private const val dbName = "app_db_v3"
 
         operator fun invoke(context: Context) = instance ?: synchronized(LOCK) {
             instance ?: buildDatabase(context).also { instance = it }
@@ -21,7 +22,8 @@ abstract class AppDatabase : RoomDatabase() {
 
         private fun buildDatabase(context: Context) = Room.databaseBuilder(
             context,
-            AppDatabase::class.java, "app_db_v2"
+            AppDatabase::class.java, dbName
         ).build()
+
     }
 }
