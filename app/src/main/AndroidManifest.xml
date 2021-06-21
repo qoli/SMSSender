@@ -39,6 +39,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SMSSender">
+
         <activity android:name=".activity.viewJobs.ViewJob"></activity>
         <activity android:name=".activity.newJobs.NewJobNotionMode" />
         <activity android:name=".activity.newJobs.NewJobCSVmode" />

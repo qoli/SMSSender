@@ -52,4 +52,7 @@
     <string name="save_button">Save</string>
     <string name="sim_card">SIM Card</string>
     <string name="this_phone_number">Phone Number</string>
+    <string name="run_button_title">Run</string>
+    <string name="agree">Agree</string>
+    <string name="cancal">cancal</string>
 </resources>

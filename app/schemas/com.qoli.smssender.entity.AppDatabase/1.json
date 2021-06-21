@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "9f23496b776d2539189c5d39f3772866",
+    "identityHash": "6f67b5ca801be36ae37be0e4c8b18686",
     "entities": [
       {
         "tableName": "JobEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `jobMode` INTEGER NOT NULL, `jobTitle` TEXT NOT NULL, `timestamp` INTEGER, `jobInterval` INTEGER NOT NULL, `jobBackNumber` TEXT, `jobBackNumberLoop` INTEGER, `basePhoneNumbers` TEXT, `baseMessage` TEXT, `csvFileByte` INTEGER, `notionURL` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `jobMode` INTEGER NOT NULL, `jobTitle` TEXT NOT NULL, `timestamp` INTEGER, `jobInterval` INTEGER NOT NULL, `jobBackNumber` TEXT, `jobBackNumberLoop` INTEGER NOT NULL, `basePhoneNumbers` TEXT, `baseMessage` TEXT, `csvFileByte` INTEGER, `notionURL` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -48,7 +48,7 @@
             "fieldPath": "jobBackNumberLoop",
             "columnName": "jobBackNumberLoop",
             "affinity": "INTEGER",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "basePhoneNumbers",
@@ -88,7 +88,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9f23496b776d2539189c5d39f3772866')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6f67b5ca801be36ae37be0e4c8b18686')"
     ]
   }
 }

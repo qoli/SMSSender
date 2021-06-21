@@ -43,6 +43,8 @@ class NewJobBaseMode : AppCompatActivity() {
             newJob.jobBackNumber = binding.ShareForm.backNumber.text.toString()
             newJob.basePhoneNumbers = binding.PhoneNumbers.text.toString()
             newJob.baseMessage = binding.message.text.toString()
+            newJob.jobBackNumberLoop =
+                binding.ShareForm.backNumberLoop.text.toString().toIntOrNull() ?: 0
 
             JobsHelper(this.applicationContext).newJob(newJob) { data ->
 

@@ -3,7 +3,8 @@ package com.qoli.smssender.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-
+import com.qoli.smssender.R
+import com.qoli.smssender.app.AppApplication
 
 @Entity
 data class JobEntity(
@@ -13,7 +14,7 @@ data class JobEntity(
     @ColumnInfo var timestamp: Int? = null,
     @ColumnInfo var jobInterval: Int = 5,
     @ColumnInfo var jobBackNumber: String? = null,
-    @ColumnInfo var jobBackNumberLoop: Int? = null,
+    @ColumnInfo var jobBackNumberLoop: Int = 0,
     @ColumnInfo var basePhoneNumbers: String? = null,
     @ColumnInfo var baseMessage: String? = null,
     @ColumnInfo var csvFileByte: Byte? = null,
@@ -27,10 +28,12 @@ data class JobEntity(
     )
 
     fun getJobModeText(): String {
+
         return when (this.jobMode) {
-            0 -> "Base Mode"
-            1 -> "CSV Mode"
-            2 -> "Notion Database Mode"
+            0 -> AppApplication.getContext()?.getString(R.string.send_mode_base) ?: "Base Mode"
+            1 -> AppApplication.getContext()?.getString(R.string.send_mode_csv) ?: "CSV Mode"
+            2 -> AppApplication.getContext()?.getString(R.string.send_mode_notion)
+                ?: "Notion Database Mode"
             else -> "unknown"
         }
     }

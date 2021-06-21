@@ -100,7 +100,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:text="任務設定"
                 android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Subtitle2"
                 android:textStyle="bold" />
@@ -187,10 +187,65 @@
             </LinearLayout>
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="16dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="每 X 次執行回測"
+                        android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Caption" />
+
+                    <TextView
+                        android:id="@+id/backNumberLoop"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="back Loop Times"
+                        android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1" />
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <LinearLayout
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/viewPhones"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="全部號碼" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:text="狀態"
                 android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Subtitle2"
                 android:textStyle="bold" />
@@ -290,7 +345,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="等待"
+                        android:text="正在等待"
                         android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Caption" />
 
                     <TextView
@@ -298,7 +353,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
-                        android:text="(S)"
+                        android:text="(s)"
                         android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1" />
                 </LinearLayout>
 
@@ -312,7 +367,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="接收號碼"
+                        android:text="正在發送對象"
                         android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Caption" />
 
                     <TextView
@@ -366,6 +421,36 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="16dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="發送結果（上一次）"
+                        android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Caption" />
+
+                    <TextView
+                        android:id="@+id/now_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:text="尚未執行"
+                        android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -380,6 +465,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="RUN" />
+
+            <Button
+                android:id="@+id/testButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Test" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="測試運行不會真實的發送訊息"
+                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Caption" />
+
+            <Button
+                android:id="@+id/exportButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="查看結果" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

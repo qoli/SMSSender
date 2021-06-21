@@ -35,7 +35,7 @@ class MainJobsRecyclerAdapter(var dataSet: List<JobEntity>, val ctx: Context) :
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.textView.text = dataSet[position].jobTitle
-        viewHolder.descriptionView.text = dataSet[position].jobMode.toString()
+        viewHolder.descriptionView.text = dataSet[position].getJobModeText()
 
         viewHolder.itemView.setOnClickListener {
             AppUnits.toJobViewByID(ctx, dataSet[position].id.toInt())
