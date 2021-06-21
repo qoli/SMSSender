@@ -17,7 +17,7 @@ class NewJobCSVmode : AppCompatActivity() {
 
         binding.AppBarLayout.topAppBar.title = getString(R.string.send_mode_csv)
         binding.AppBarLayout.topAppBar.setNavigationOnClickListener {
-            super.onBackPressed()
+            this.finish()
         }
 
         binding.SaveButton.saveButton.setOnClickListener {

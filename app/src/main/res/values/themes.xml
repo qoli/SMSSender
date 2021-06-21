@@ -4,7 +4,7 @@
         <!-- Status bar -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
-        <!--        -->
+        <!-- ActionBar -->
         <item name="actionBarStyle">@style/Custom.ActionBar</item>
         <!-- app -->
         <item name="colorPrimary">@color/mainColor</item>
@@ -23,19 +23,10 @@
 
     <style name="Custom.ActionBar" parent="Widget.MaterialComponents.Light.ActionBar.Solid">
         <item name="background">@color/white</item>
-        <item name="elevation">0dp</item>
     </style>
 
-    <style name="AppTheme.Custom" parent="Theme.AppCompat">
-        <item name="md_corner_radius">16dp</item>
+    <style name="Custom.AppBarLayout" parent="Widget.Design.AppBarLayout">
+        <item name="android:background">@color/white</item>
     </style>
 
-    <style name="Theme.SMSSender.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="Theme.SMSSender.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.SMSSender.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

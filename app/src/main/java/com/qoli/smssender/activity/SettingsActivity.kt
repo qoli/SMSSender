@@ -19,7 +19,7 @@ class SettingsActivity : AppCompatActivity() {
 
         binding.AppBarLayout.topAppBar.title = "Settings"
         binding.AppBarLayout.topAppBar.setNavigationOnClickListener {
-            super.onBackPressed()
+            this.finish()
         }
 
         if (savedInstanceState == null) {

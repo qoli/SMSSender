@@ -11,6 +11,12 @@ interface JobsDAO {
     @Query("SELECT * FROM JobEntity WHERE id IN (:ids)")
     fun loadAllByIds(ids: IntArray): List<JobEntity>
 
+    @Query("SELECT * FROM JobEntity WHERE id = :id")
+    fun getOne(id: Int): JobEntity
+
+    @Query("SELECT * FROM JobEntity WHERE timestamp = :timestamp")
+    fun getOnebyTimestamp(timestamp: Int): JobEntity
+
     @Insert
     fun insertAll(vararg users: JobEntity)
 

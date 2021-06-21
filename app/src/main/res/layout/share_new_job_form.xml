@@ -3,26 +3,27 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/job_title" />
+            android:text="@string/job_title"
+            android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Caption" />
 
         <EditText
             android:id="@+id/JobTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autofillHints=""
+            android:autofillHints="no"
             android:ems="10"
             android:hint="@string/job_title_hint"
             android:inputType="text" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:baselineAligned="false"
             android:orientation="horizontal">
@@ -37,13 +38,14 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/send_interval" />
+                    android:text="@string/send_interval"
+                    android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Caption" />
 
                 <EditText
                     android:id="@+id/interval"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:autofillHints=""
+                    android:autofillHints="no"
                     android:ems="10"
                     android:hint="@string/send_interval_hint"
                     android:inputType="number" />
@@ -57,22 +59,48 @@
                 android:orientation="vertical">
 
                 <TextView
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/back_number" />
+                    android:text="@string/back_number_loop"
+                    android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Caption" />
+
+                <EditText
+                    android:id="@+id/backNumberLoop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="no"
+                    android:ems="10"
+                    android:hint="@string/back_number_loop_hint"
+                    android:inputType="numberSigned" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/back_number"
+                    android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Caption" />
 
                 <EditText
                     android:id="@+id/backNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:autofillHints=""
+                    android:autofillHints="phone"
                     android:ems="10"
                     android:hint="@string/back_number_hint"
                     android:inputType="phone" />
 
             </LinearLayout>
+
         </LinearLayout>
+
     </LinearLayout>
 
 </layout>

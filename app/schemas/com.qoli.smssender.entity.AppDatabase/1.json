@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "c945774562d82ac5902a2c637b6531e2",
+    "identityHash": "9f23496b776d2539189c5d39f3772866",
     "entities": [
       {
         "tableName": "JobEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `jobMode` INTEGER NOT NULL, `jobTitle` TEXT NOT NULL, `jobInterval` INTEGER NOT NULL, `jobBackNumber` TEXT, `basePhoneNumbers` TEXT, `baseMessage` TEXT, `csvFileByte` INTEGER, `notionURL` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `jobMode` INTEGER NOT NULL, `jobTitle` TEXT NOT NULL, `timestamp` INTEGER, `jobInterval` INTEGER NOT NULL, `jobBackNumber` TEXT, `jobBackNumberLoop` INTEGER, `basePhoneNumbers` TEXT, `baseMessage` TEXT, `csvFileByte` INTEGER, `notionURL` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -27,6 +27,12 @@
             "notNull": true
           },
           {
+            "fieldPath": "timestamp",
+            "columnName": "timestamp",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
             "fieldPath": "jobInterval",
             "columnName": "jobInterval",
             "affinity": "INTEGER",
@@ -36,6 +42,12 @@
             "fieldPath": "jobBackNumber",
             "columnName": "jobBackNumber",
             "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "jobBackNumberLoop",
+            "columnName": "jobBackNumberLoop",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
@@ -76,7 +88,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c945774562d82ac5902a2c637b6531e2')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9f23496b776d2539189c5d39f3772866')"
     ]
   }
 }

@@ -16,7 +16,7 @@ class NewJobNotionMode : AppCompatActivity() {
 
         binding.AppBarLayout.topAppBar.title = getString(R.string.send_mode_notion)
         binding.AppBarLayout.topAppBar.setNavigationOnClickListener {
-            super.onBackPressed()
+            this.finish()
         }
 
         binding.SaveButton.saveButton.setOnClickListener {

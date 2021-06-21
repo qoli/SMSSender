@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,16 +12,10 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="128dp"
+        android:layout_height="match_parent"
         android:fillViewport="true"
         android:scrollbars="none"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <!-- Main -->
         <LinearLayout
@@ -32,7 +26,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
 
             <TextView
                 android:layout_width="match_parent"
@@ -46,7 +39,7 @@
                 android:id="@+id/PermissionsText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="PermissionsText"
+                android:text="Loading..."
                 android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1" />
 
             <TextView
@@ -61,61 +54,9 @@
                 android:id="@+id/DefaultApp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="DefaultApp"
+                android:text="..."
                 android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1" />
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:baselineAligned="false"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto"
-                        android:paddingTop="16dp"
-                        android:paddingBottom="4dp"
-                        android:text="SIM Card" />
-
-                    <TextView
-                        android:id="@+id/SIMCardText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="SIMCardText"
-                        android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto"
-                        android:paddingTop="16dp"
-                        android:paddingBottom="4dp"
-                        android:text="Phone Number" />
-
-                    <TextView
-                        android:id="@+id/PhoneNumber"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="PhoneNumber"
-                        android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1" />
-                </LinearLayout>
-
-            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -128,18 +69,34 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/AllJobsView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/NewJob"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="New job"
-                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body2" />
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false" />
+
+            <TextView
+                android:id="@+id/AllJobsViewText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="請使用添加按鈕新建任務"
+                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body1" />
+
+            <!--            <Button-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="8dp"-->
+            <!--                android:text="New job"-->
+            <!--                android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Body2" />-->
 
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/NewJob"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        app:srcCompat="@drawable/ic_baseline_add_24" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

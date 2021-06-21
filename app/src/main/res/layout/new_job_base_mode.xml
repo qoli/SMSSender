@@ -1,39 +1,38 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".activity.newJobs.NewJobBaseMode">
 
     <include
         android:id="@+id/AppBarLayout"
         layout="@layout/app_bar_with_back" />
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="128dp"
+        android:fillViewport="true"
         android:scrollbars="none"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
 
             <include
                 android:id="@+id/ShareForm"
-                layout="@layout/share_new_job_form" />
+                layout="@layout/share_new_job_form"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_weight="1"
                 android:text="@string/receiver_number"
                 android:textAlignment="viewStart"
                 android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Caption" />
@@ -43,20 +42,18 @@
                 style="@android:style/Widget.Material.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:autofillHints=""
-                android:ems="10"
+                android:ems="8"
                 android:gravity="start|top"
                 android:hint="@string/phone_number_hint"
+                android:importantForAutofill="no"
                 android:inputType="textMultiLine"
                 android:lines="8"
                 tools:ignore="TextFields" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_weight="1"
                 android:text="@string/message_content"
                 android:textAlignment="viewStart"
                 android:textAppearance="@style/TextAppearance.MdcTypographyStyles.Caption" />
@@ -66,11 +63,10 @@
                 style="@android:style/Widget.Material.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:autofillHints=""
                 android:ems="10"
                 android:gravity="start|top"
                 android:hint="@string/message_content_hint"
+                android:importantForAutofill="no"
                 android:inputType="textMultiLine"
                 android:lines="5" />
 
@@ -80,4 +76,4 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

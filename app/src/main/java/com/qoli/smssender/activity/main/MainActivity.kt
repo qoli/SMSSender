@@ -1,12 +1,10 @@
 package com.qoli.smssender.activity.main
 
 
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,9 +28,7 @@ import com.qoli.smssender.module.SmsTools
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var smsTools: SmsTools
     private lateinit var binding: ActivityMainBinding
-    private var intentSimStateChanged: IntentFilter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,11 +36,6 @@ class MainActivity : AppCompatActivity() {
 
         // init
         binding = ActivityMainBinding.inflate(layoutInflater)
-        smsTools = SmsTools(this)
-
-        // Receiver
-        intentSimStateChanged = IntentFilter("android.intent.action.SIM_STATE_CHANGED")
-        registerReceiver(simStateReceiver, intentSimStateChanged)
 
         // view
         setContentView(binding.root)
@@ -57,26 +48,11 @@ class MainActivity : AppCompatActivity() {
         fetchData()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        unregisterReceiver(simStateReceiver)
-    }
-
-    // BroadcastReceiver
-    private val simStateReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            if (intent.action.equals("android.intent.action.SIM_STATE_CHANGED")) {
-                reloadUI()
-            }
-        }
-    }
 
     // Views
     private fun setupAllJobsView() {
-        JobsHelper(this.applicationContext).listAll { data ->
-            binding.AllJobsView.adapter = MainJobsRecyclerAdapter(data)
-            binding.AllJobsView.layoutManager = LinearLayoutManager(this)
-        }
+        binding.AllJobsView.adapter = MainJobsRecyclerAdapter(emptyList(), this)
+        binding.AllJobsView.layoutManager = LinearLayoutManager(this)
     }
 
     private fun fetchData() {
@@ -85,6 +61,11 @@ class MainActivity : AppCompatActivity() {
                 runOnUiThread {
                     (binding.AllJobsView.adapter as? MainJobsRecyclerAdapter)?.updateData(data)
                     binding.AllJobsView.adapter?.notifyDataSetChanged()
+
+                    if (data.isNotEmpty()) {
+                        binding.AllJobsViewText.visibility = View.GONE
+                    }
+
                 }
             } catch (e: InterruptedException) {
                 e.printStackTrace()
@@ -113,15 +94,13 @@ class MainActivity : AppCompatActivity() {
         binding.NewJob.setOnClickListener {
             newJobDialog()
         }
-
-
     }
 
     private fun newJobDialog() {
 
         val dialog = MaterialDialog(this, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
             cornerRadius(16f)
-            customView(R.layout.new_jobs_bottom_sheet, scrollable = true, dialogWrapContent = true)
+            customView(R.layout.sheet_new_jobs, scrollable = true, dialogWrapContent = true)
             lifecycleOwner(this@MainActivity)
         }
 
@@ -148,7 +127,7 @@ class MainActivity : AppCompatActivity() {
             .permission(Permission.RECEIVE_SMS)
             .permission(Permission.READ_PHONE_STATE)
             .permission(Permission.WRITE_EXTERNAL_STORAGE)
-            .permission(Permission.WRITE_SETTINGS)
+//            .permission(Permission.WRITE_SETTINGS)
             .request { permissions, all ->
                 Log.d("Logs", permissions.toString())
 
@@ -163,9 +142,7 @@ class MainActivity : AppCompatActivity() {
 
     //
     private fun reloadUI() {
-        binding.DefaultApp.text = smsTools.getDefaultApp()
-        binding.SIMCardText.text = smsTools.getSIMCardState()
-        binding.PhoneNumber.text = smsTools.getPhoneNumber()
+        binding.DefaultApp.text = SmsTools(this).getDefaultApp()
     }
 
 

@@ -20,11 +20,14 @@
         <item name="android:colorBackground">@color/background_deep</item>
         <item name="colorOnBackground">#FFF</item>
     </style>
-    <!--Widget.MaterialComponents.Light.ActionBar.Solid-->
+
     <style name="Custom.ActionBar" parent="Widget.MaterialComponents.ActionBar.Solid">
         <item name="background">@color/black</item>
         <item name="elevation">0dp</item>
     </style>
 
+    <style name="Custom.AppBarLayout" parent="Widget.Design.AppBarLayout">
+        <item name="android:background">@color/black</item>
+    </style>
 
 </resources>

@@ -5,6 +5,7 @@
     <string name="send_mode_csv">CSV File Mode</string>
     <string name="send_mode_notion">Notion Database Mode</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="view_job_title">Job</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Jobs Base</string>
@@ -34,6 +35,9 @@
     <string name="send_interval_hint">秒</string>
     <string name="back_number">回測號碼</string>
     <string name="back_number_hint">+86</string>
+    <string name="back_number_loop">每 X 次執行回測</string>
+    <string name="back_number_loop_hint"></string>
+
     <string name="receiver_number">接收號碼（一行一個號碼）</string>
     <string name="phone_number_hint">Phone Number</string>
     <string name="message_content">信息內容</string>
@@ -46,4 +50,6 @@
     <string name="new_base_mode">基本发送模式</string>
     <string name="job_title_hint" />
     <string name="save_button">Save</string>
+    <string name="sim_card">SIM Card</string>
+    <string name="this_phone_number">Phone Number</string>
 </resources>
