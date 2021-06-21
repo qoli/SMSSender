@@ -5,13 +5,11 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
+@DelicateCoroutinesApi
 class JobsHelper(val context: Context) {
 
-    @DelicateCoroutinesApi
     fun newJob(obj: JobEntity, callback: (JobEntity?) -> Unit) {
-
         val ctx = this
-
         GlobalScope.launch {
             AppDatabase(context).dao()?.insertAll(obj)
 
@@ -25,24 +23,29 @@ class JobsHelper(val context: Context) {
         }
     }
 
-    @DelicateCoroutinesApi
     fun listAll(callback: (result: List<JobEntity>) -> Unit) {
         GlobalScope.launch {
             callback.invoke(AppDatabase(context).dao()?.getAll() ?: emptyList())
         }
     }
 
-    @DelicateCoroutinesApi
     fun getOne(id: Int, callback: (result: JobEntity?) -> Unit) {
         GlobalScope.launch {
             callback.invoke(AppDatabase(context).dao()?.getOne(id))
         }
     }
 
-    @DelicateCoroutinesApi
-    fun getByTimestamp(timestamp: Int, callback: (result: JobEntity?) -> Unit) {
+    private fun getByTimestamp(timestamp: Int, callback: (result: JobEntity?) -> Unit) {
         GlobalScope.launch {
             callback.invoke(AppDatabase(context).dao()?.getOnebyTimestamp(timestamp))
         }
+    }
+
+    fun del(obj: JobEntity, callback: () -> Unit) {
+        GlobalScope.launch {
+            AppDatabase(context).dao()?.delete(obj)
+            callback.invoke()
+        }
+
     }
 }

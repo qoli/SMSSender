@@ -14,6 +14,7 @@ import com.qoli.smssender.databinding.ActivityViewJobBinding
 import com.qoli.smssender.entity.JobEntity
 import com.qoli.smssender.entity.JobsHelper
 import com.qoli.smssender.module.SmsTools
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -23,6 +24,7 @@ class ViewJob : AppCompatActivity() {
     private lateinit var binding: ActivityViewJobBinding
     private lateinit var smsTools: SmsTools
     private var data: JobEntity? = null
+    private var resultText = "尚未執行"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +48,6 @@ class ViewJob : AppCompatActivity() {
                 }
             }
 
-
         }
         binding.testButton.setOnClickListener {
             runButtonAction(isRun = false)
@@ -54,6 +55,14 @@ class ViewJob : AppCompatActivity() {
 
         binding.viewPhones.setOnClickListener {
             viewPhones()
+        }
+
+        binding.exportButton.setOnClickListener {
+            export()
+        }
+
+        binding.delButton.setOnClickListener {
+            delJob()
         }
 
         smsTools = SmsTools(this)
@@ -93,22 +102,25 @@ class ViewJob : AppCompatActivity() {
             Log.d("Logs", data.toString())
             ctx.data = data
             binding.AppBarLayout.topAppBar.title = data?.jobTitle ?: "get data error"
-            binding.modeText.text = data?.getJobModeText()
-            binding.sendInterval.text = "${data?.jobInterval.toString()}(s)"
-            binding.backNumber.text = data?.jobBackNumber
-            binding.numTotal.text = data?.basePhoneNumbers?.lines()?.size.toString()
-            binding.nowMessageContent.text = data?.baseMessage.toString()
-            binding.nowSendToNumber.text = data?.basePhoneNumbers?.lines()?.first().toString()
-            //
-            binding.numBeenSent.text = "0"
-            binding.numWillSent.text = data?.basePhoneNumbers?.lines()?.size.toString()
-            //
-            binding.backNumberLoop.text = data?.jobBackNumberLoop.toString()
-            binding.nowSendInterval.text = "-"
-            binding.nowSendToNumber.text = "-"
+            runOnUiThread {
+                binding.modeText.text = data?.getJobModeText()
+                binding.sendInterval.text = "${data?.jobInterval.toString()}(s)"
+                binding.backNumber.text = data?.jobBackNumber
+                binding.numTotal.text = data?.basePhoneNumbers?.lines()?.size.toString()
+                binding.nowMessageContent.text = data?.baseMessage.toString()
+                binding.nowSendToNumber.text = data?.basePhoneNumbers?.lines()?.first().toString()
+                //
+                binding.numBeenSent.text = "0"
+                binding.numWillSent.text = data?.basePhoneNumbers?.lines()?.size.toString()
+                //
+                binding.backNumberLoop.text = data?.jobBackNumberLoop.toString()
+                binding.nowSendInterval.text = "-"
+                binding.nowSendToNumber.text = "-"
+            }
         }
     }
 
+    @DelicateCoroutinesApi
     private fun runButtonAction(isRun: Boolean = false) {
 
         val ctx = this
@@ -116,49 +128,87 @@ class ViewJob : AppCompatActivity() {
         val phones = data?.basePhoneNumbers?.lines() ?: return
         val repeatTimes = data?.jobInterval ?: return
         val messageText = data?.baseMessage ?: return
+        val backLoop = data?.jobBackNumberLoop ?: return
+        val backPhone = data?.jobBackNumber ?: return
 
-        Log.d("Logs", max.toString())
+        Log.d("Logs", "max: $max")
 
+        resultText = "執行結果"
 
-        GlobalScope.launch {
+        val run = GlobalScope.launch {
             for (i in 0 until max) {
 
                 val nowPhoneNumber = phones[i]
 
-                binding.nowSendToNumber.text = nowPhoneNumber
-                binding.numBeenSent.text = i.toString()
-                binding.numWillSent.text = (max - i).toString()
+                runOnUiThread {
+                    binding.nowSendToNumber.text = nowPhoneNumber
+                    binding.numBeenSent.text = i.toString()
+                    binding.numWillSent.text = (max - i).toString()
+                }
 
                 var ii = 1
                 repeat(repeatTimes) {
-                    binding.nowSendInterval.text = "${ii.toString()}(s)"
+                    runOnUiThread {
+                        binding.nowSendInterval.text = "${ii.toString()}(s)"
+                    }
                     delay(1000)
                     ii += 1
                 }
 
+                runOnUiThread {
+                    binding.nowSendInterval.text = "正在發送"
+                }
+
+
+                delay(2000)
                 smsTools.sendMessage(nowPhoneNumber, messageText, isRun) { bool ->
                     if (bool) {
-                        binding.nowResult.text = "${nowPhoneNumber} 成功"
+                        runOnUiThread {
+                            binding.nowResult.text = "$nowPhoneNumber 成功"
+                        }
+                        resultText += "\n\r ${i + 1} $nowPhoneNumber 成功"
                     } else {
-                        binding.nowResult.text = "${nowPhoneNumber} 失敗"
+                        runOnUiThread {
+                            binding.nowResult.text = "$nowPhoneNumber 失敗"
+                        }
+                        resultText += "\n\r ${i + 1} $nowPhoneNumber 失敗"
                     }
                 }
 
-            }
-
-            binding.numBeenSent.text = max.toString()
-            binding.numWillSent.text = "0"
-            binding.nowSendInterval.text = "-"
-            binding.nowSendToNumber.text = "-"
-
-            runOnUiThread {
-                MaterialDialog(ctx).show {
-                    title(text = "All is Done")
-                    message(text = "已全部發送完成")
+                if (((i + 1) % backLoop) == 0) {
+                    runOnUiThread {
+                        binding.nowSendInterval.text = "回測信息"
+                        binding.nowSendToNumber.text = "回測號碼"
+                    }
+                    delay(2000)
+                    smsTools.sendMessage(backPhone, "[回測信息] $messageText", isRun) { bool ->
+                        if (bool) {
+                            runOnUiThread {
+                                binding.nowResult.text = "[回測信息] $nowPhoneNumber 成功"
+                            }
+                            resultText += "\n\r ${i + 1} 回測信息 成功"
+                        } else {
+                            runOnUiThread {
+                                binding.nowResult.text = "[回測信息] $nowPhoneNumber 失敗"
+                            }
+                            resultText += "\n\r ${i + 1} 回測信息 失敗"
+                        }
+                    }
                 }
+                delay(2000)
             }
 
+        }
 
+        run.invokeOnCompletion { h ->
+            runOnUiThread {
+                binding.numBeenSent.text = max.toString()
+                binding.numWillSent.text = "0"
+                binding.nowSendInterval.text = "-"
+                binding.nowSendToNumber.text = "-"
+
+                ctx.export()
+            }
         }
     }
 
@@ -166,6 +216,35 @@ class ViewJob : AppCompatActivity() {
         MaterialDialog(this).show {
             title(text = "All Phone Number")
             message(text = data?.basePhoneNumbers)
+        }
+    }
+
+
+    private fun export() {
+        MaterialDialog(this).show {
+            title(text = "Result")
+            message(text = resultText)
+        }
+    }
+
+    private fun delJob() {
+        val ctx = this
+
+        if (ctx.data == null) {
+            return
+        }
+
+        MaterialDialog(this).show {
+            title(text = "刪除")
+            message(text = "刪除任務")
+            positiveButton(R.string.agree) { dialog ->
+                JobsHelper(ctx.applicationContext).del(ctx.data!!) {
+                    ctx.finish()
+                }
+            }
+            negativeButton(R.string.cancal) { dialog ->
+                // Do something
+            }
         }
     }
 }

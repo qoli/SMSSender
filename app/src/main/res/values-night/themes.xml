@@ -23,7 +23,6 @@
 
     <style name="Custom.ActionBar" parent="Widget.MaterialComponents.ActionBar.Solid">
         <item name="background">@color/black</item>
-        <item name="elevation">0dp</item>
     </style>
 
     <style name="Custom.AppBarLayout" parent="Widget.Design.AppBarLayout">

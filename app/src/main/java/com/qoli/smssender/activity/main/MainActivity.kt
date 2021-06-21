@@ -64,6 +64,8 @@ class MainActivity : AppCompatActivity() {
 
                     if (data.isNotEmpty()) {
                         binding.AllJobsViewText.visibility = View.GONE
+                    } else {
+                        binding.AllJobsViewText.visibility = View.VISIBLE
                     }
 
                 }

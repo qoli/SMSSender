@@ -3,8 +3,8 @@
     <PreferenceCategory app:title="@string/messages_header">
 
         <EditTextPreference
-            app:key="back_phone_number"
-            app:title="@string/back_phone_number"
+            app:key="SIMCardTimes"
+            app:title="@string/sim_cart_times"
             app:useSimpleSummaryProvider="true" />
 
 <!--        <ListPreference-->

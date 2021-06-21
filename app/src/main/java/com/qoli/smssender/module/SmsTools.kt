@@ -4,7 +4,6 @@ package com.qoli.smssender.module
 import android.content.Context
 import android.telephony.TelephonyManager
 import android.util.Log
-import com.hjq.toast.ToastUtils
 import com.klinker.android.send_message.*
 import com.klinker.android.send_message.Settings
 import com.qoli.smssender.app.AppUnits
@@ -81,7 +80,6 @@ class SmsTools(private val ctx: Context) {
                     transaction.sendNewMessage(message, Transaction.NO_THREAD_ID)
                 }
                 callback.invoke(true)
-                ToastUtils.show("Send to $numberText")
             } catch (e: Exception) {
                 callback.invoke(false)
                 Log.w("sendMessage", e.toString())
