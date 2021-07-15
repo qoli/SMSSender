@@ -28,10 +28,12 @@ import com.qoli.smssender.module.SmsTools
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var smsTools: SmsTools
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        smsTools = SmsTools(this)
         XXPermissions.setScopedStorage(true)
 
         // init
@@ -41,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setupView()
         setupAllJobsView()
+        
     }
 
     override fun onResume() {
@@ -129,7 +132,6 @@ class MainActivity : AppCompatActivity() {
             .permission(Permission.RECEIVE_SMS)
             .permission(Permission.READ_PHONE_STATE)
             .permission(Permission.WRITE_EXTERNAL_STORAGE)
-//            .permission(Permission.WRITE_SETTINGS)
             .request { permissions, all ->
                 Log.d("Logs", permissions.toString())
 
@@ -144,7 +146,7 @@ class MainActivity : AppCompatActivity() {
 
     //
     private fun reloadUI() {
-        binding.DefaultApp.text = SmsTools(this).getDefaultApp()
+        binding.DefaultApp.text = smsTools.getDefaultApp()
     }
 
 

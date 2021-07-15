@@ -8,8 +8,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.afollestad.materialdialogs.MaterialDialog
+import com.hjq.toast.ToastUtils
 import com.qoli.smssender.R
 import com.qoli.smssender.app.AppConstant
+import com.qoli.smssender.app.Logs
 import com.qoli.smssender.databinding.ActivityViewJobBinding
 import com.qoli.smssender.entity.JobEntity
 import com.qoli.smssender.entity.JobsHelper
@@ -26,8 +28,12 @@ class ViewJob : AppCompatActivity() {
     private var data: JobEntity? = null
     private var resultText = "尚未執行"
 
+    private var isEnable = false
+    private var isSending = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        smsTools = SmsTools(this)
 
         binding = ActivityViewJobBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -40,10 +46,10 @@ class ViewJob : AppCompatActivity() {
             MaterialDialog(this).show {
                 title(R.string.run_button_title)
                 message(text = "執行本次發送計畫")
-                positiveButton(R.string.agree) { dialog ->
+                positiveButton(R.string.ok) { dialog ->
                     runButtonAction(isRun = true)
                 }
-                negativeButton(R.string.cancal) { dialog ->
+                negativeButton(R.string.cancel) { dialog ->
                     // Do something
                 }
             }
@@ -65,18 +71,59 @@ class ViewJob : AppCompatActivity() {
             delJob()
         }
 
-        smsTools = SmsTools(this)
+        fetchData()
+    }
+
+    override fun onResume() {
+        super.onResume()
 
         // Receiver
-        registerReceiver(simStateReceiver, IntentFilter("android.intent.action.SIM_STATE_CHANGED"))
+        try {
+            registerReceiver(
+                simStateReceiver,
+                IntentFilter("android.intent.action.SIM_STATE_CHANGED")
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+            ToastUtils.show("註冊 simStateReceiver 錯誤")
+        }
 
-        fetchData()
+        try {
+            registerReceiver(
+                smsSentReceiver,
+                IntentFilter("SmsSentReceiver.onReceive")
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+            ToastUtils.show("註冊 SmsSentReceiver 錯誤")
+        }
     }
 
 
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(simStateReceiver)
+        unregisterReceiver(smsSentReceiver)
+    }
+
+    override fun onBackPressed() {
+        exit {
+            super.onBackPressed()
+        }
+    }
+
+    override fun finish() {
+        exit {
+            super.finish()
+        }
+    }
+
+    fun exit(callback: () -> Unit) {
+        if (isSending) {
+            ToastUtils.show("無法在發送中退出界面")
+        } else {
+            callback.invoke()
+        }
     }
 
     // BroadcastReceiver
@@ -88,18 +135,53 @@ class ViewJob : AppCompatActivity() {
         }
     }
 
+    private val smsSentReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            Logs(
+                "ViewJob / smsSentReceiver / ${
+                    intent.extras?.get("errorCode")?.toString()
+                } / ${intent.extras?.get("uri")?.toString()}"
+            )
+        }
+    }
+
 
     private fun reloadSIMCardUI() {
+
+        val ctx = this
+
+        if (smsTools.getSIMCardState() == "Ready") {
+            binding.PhoneNumber.text = smsTools.getPhoneNumber() ?: "Error"
+
+            if (smsTools.getPhoneNumber() != null) {
+                isEnable = true
+            } else {
+                MaterialDialog(this).show {
+                    title(text = "遇到錯誤")
+                    message(text = "無法找到有效的電話號碼\n可能會無法成功發送")
+                    positiveButton(text = "繼續") { _ ->
+                        isEnable = true
+                    }
+
+                    negativeButton(R.string.cancel) { _ ->
+                        ctx.finish()
+                    }
+                }
+            }
+
+        } else {
+            binding.PhoneNumber.text = "SIM 未就緒"
+        }
+
         binding.SIMCardText.text = smsTools.getSIMCardState()
-        binding.PhoneNumber.text = smsTools.getPhoneNumber()
+        binding.runButton.isEnabled = isEnable
+
     }
 
     private fun fetchData() {
         val ctx = this
         val id = intent.getIntExtra(AppConstant.jobID, 0)
         JobsHelper(this.applicationContext).getOne(id) { data ->
-            Log.d("Logs", id.toString())
-            Log.d("Logs", data.toString())
             ctx.data = data
             binding.AppBarLayout.topAppBar.title = data?.jobTitle ?: "get data error"
             runOnUiThread {
@@ -134,6 +216,11 @@ class ViewJob : AppCompatActivity() {
         Log.d("Logs", "max: $max")
 
         resultText = "執行結果"
+        isSending = true
+
+        binding.runButton.isEnabled = false
+        binding.testButton.isEnabled = false
+
 
         val run = GlobalScope.launch {
             for (i in 0 until max) {
@@ -175,7 +262,7 @@ class ViewJob : AppCompatActivity() {
                     }
                 }
 
-                if (((i + 1) % backLoop) == 0) {
+                if (backLoop != 0 && ((i + 1) % backLoop) == 0) {
                     runOnUiThread {
                         binding.nowSendInterval.text = "回測信息"
                         binding.nowSendToNumber.text = "回測號碼"
@@ -207,6 +294,11 @@ class ViewJob : AppCompatActivity() {
                 binding.nowSendInterval.text = "-"
                 binding.nowSendToNumber.text = "-"
 
+                binding.runButton.isEnabled = true
+                binding.testButton.isEnabled = true
+
+                isSending = false
+
                 ctx.export()
             }
         }
@@ -221,15 +313,20 @@ class ViewJob : AppCompatActivity() {
 
 
     private fun export() {
-        MaterialDialog(this).show {
-            title(text = "Result")
-            message(text = resultText)
+        try {
+            MaterialDialog(this).show {
+                title(text = "Result")
+                message(text = resultText)
+            }
+        } catch (e: Exception) {
+            ToastUtils.show("發送完畢")
         }
+
     }
 
     private fun delJob() {
-        val ctx = this
 
+        val ctx = this
         if (ctx.data == null) {
             return
         }
@@ -237,12 +334,12 @@ class ViewJob : AppCompatActivity() {
         MaterialDialog(this).show {
             title(text = "刪除")
             message(text = "刪除任務")
-            positiveButton(R.string.agree) { dialog ->
+            positiveButton(R.string.ok) { dialog ->
                 JobsHelper(ctx.applicationContext).del(ctx.data!!) {
                     ctx.finish()
                 }
             }
-            negativeButton(R.string.cancal) { dialog ->
+            negativeButton(R.string.cancel) { dialog ->
                 // Do something
             }
         }

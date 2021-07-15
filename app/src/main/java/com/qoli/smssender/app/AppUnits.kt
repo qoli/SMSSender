@@ -2,6 +2,7 @@ package com.qoli.smssender.app
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import com.qoli.smssender.activity.viewJobs.ViewJob
 
 object AppUnits {
@@ -28,4 +29,8 @@ object AppUnits {
         intent.putExtra(AppConstant.jobID, jobID)
         ctx.startActivity(intent)
     }
+}
+
+fun Logs(text: String) {
+    Log.d("Logs", text)
 }

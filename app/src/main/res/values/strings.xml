@@ -54,5 +54,6 @@
     <string name="this_phone_number">Phone Number</string>
     <string name="run_button_title">Run</string>
     <string name="agree">Agree</string>
-    <string name="cancal">cancal</string>
+    <string name="ok">OK</string>
+    <string name="cancel">取消</string>
 </resources>

@@ -3,10 +3,11 @@ package com.qoli.smssender.module
 
 import android.content.Context
 import android.telephony.TelephonyManager
-import android.util.Log
 import com.klinker.android.send_message.*
 import com.klinker.android.send_message.Settings
 import com.qoli.smssender.app.AppUnits
+import com.qoli.smssender.app.Logs
+import com.qoli.smssender.receiver.SmsSentReceiver
 
 
 class SmsTools(private val ctx: Context) {
@@ -18,9 +19,12 @@ class SmsTools(private val ctx: Context) {
     }
 
     private fun initApns() {
+
         ApnUtils.initDefaultApns(ctx) {
             settings = com.qoli.smssender.module.Settings.get(ctx, true)
+
         }
+
     }
 
     private fun initSettings() {
@@ -37,8 +41,13 @@ class SmsTools(private val ctx: Context) {
 
     }
 
-    fun getPhoneNumber(): String {
-        return Utils.getMyPhoneNumber(ctx)
+    fun getPhoneNumber(): String? {
+        return try {
+            Utils.getMyPhoneNumber(ctx)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
     }
 
     fun getSIMCardState(): String {
@@ -47,17 +56,20 @@ class SmsTools(private val ctx: Context) {
         return AppUnits.simStatedText(state)
     }
 
-//    fun sendLoops(loopTimes: Int, interval: Long): Unit {
-//        Prefs.putString(AppConstant.loopTimes, loopTimes.toString())
-//        Prefs.putString(AppConstant.interval, interval.toString())
-//
-//        GlobalScope.launch {
-//            for (i in 1..loopTimes) {
-//                delay(interval)
-//                sendMessage(i)
-//            }
-//        }
-//    }
+    private fun initSmsTransaction(): Transaction {
+        val sendSettings = Settings()
+        sendSettings.mmsc = settings?.mmsc
+        sendSettings.proxy = settings?.mmsProxy
+        sendSettings.port = settings?.mmsPort
+        sendSettings.useSystemSending = true
+        val transaction = Transaction(ctx, sendSettings)
+
+        transaction.setExplicitBroadcastForSentSms(
+            SmsSentReceiver.getIntent(this.ctx)
+        )
+
+        return transaction
+    }
 
     fun sendMessage(
         numberText: String,
@@ -68,21 +80,18 @@ class SmsTools(private val ctx: Context) {
 
         Thread {
             try {
-                val sendSettings = Settings()
-                sendSettings.mmsc = settings?.mmsc
-                sendSettings.proxy = settings?.mmsProxy
-                sendSettings.port = settings?.mmsPort
-                sendSettings.useSystemSending = true
-                val transaction = Transaction(ctx, sendSettings)
+                val transaction = initSmsTransaction()
                 val message = Message(messageText, numberText)
 
                 if (isReal) {
                     transaction.sendNewMessage(message, Transaction.NO_THREAD_ID)
                 }
+                
                 callback.invoke(true)
+
             } catch (e: Exception) {
                 callback.invoke(false)
-                Log.w("sendMessage", e.toString())
+                Logs(e.toString())
             }
         }.start()
     }

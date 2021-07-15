@@ -69,25 +69,36 @@
 
         <service android:name="com.android.mms.transaction.TransactionService" />
 
-        <receiver
-            android:name=".receiver.SmsReceiver"
-            android:permission="android.permission.BROADCAST_SMS">
-            <intent-filter>
-                <action android:name="android.provider.Telephony.SMS_DELIVER" />
-            </intent-filter>
-        </receiver>
+        <!--        <receiver-->
+        <!--            android:name=".receiver.SmsReceiver"-->
+        <!--            android:enabled="true"-->
+        <!--            android:permission="android.permission.BROADCAST_SMS">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.provider.Telephony.SMS_DELIVER" />-->
+        <!--            </intent-filter>-->
+        <!--        </receiver>-->
+
         <receiver
             android:name=".receiver.MmsReceiver"
             android:permission="android.permission.BROADCAST_WAP_PUSH">
             <intent-filter>
                 <action android:name="android.provider.Telephony.WAP_PUSH_DELIVER" />
-
                 <data android:mimeType="application/vnd.wap.mms-message" />
             </intent-filter>
         </receiver>
+
+        <receiver
+            android:name=".receiver.SmsSentReceiver"
+            android:permission="android.permission.BROADCAST_SMS">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_SEND" />
+            </intent-filter>
+        </receiver>
+
         <receiver
             android:name="com.klinker.android.send_message.MmsSentReceiver"
             android:taskAffinity="com.klinker.android.messaging.MMS_SENT" />
+
         <receiver
             android:name=".receiver.MmsReceivedReceiverImpl"
             android:taskAffinity="com.klinker.android.messaging.MMS_RECEIVED" />

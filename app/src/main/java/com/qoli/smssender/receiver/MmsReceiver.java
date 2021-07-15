@@ -16,11 +16,17 @@
 
 package com.qoli.smssender.receiver;
 
+import android.content.Context;
+import android.content.Intent;
+
 import com.android.mms.transaction.PushReceiver;
 
 /**
  * Needed to make default sms app for testing
  */
 public class MmsReceiver extends PushReceiver {
-
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
+    }
 }
